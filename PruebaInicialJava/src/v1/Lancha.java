@@ -5,8 +5,8 @@ public class Lancha  extends Barco{
 	private int velocidadmax;
 	private int potencia;
 	
-	public Lancha(String altura, String ancho, int capacidad, int codigo) {
-		super(altura, ancho, capacidad, codigo);
+	public Lancha(double altura, double ancho, int capacidad, String modelo) {
+		super(altura, ancho, capacidad,modelo);
 		this.velocidadmax=velocidadmax;
 		this.potencia=potencia;
 		
@@ -18,6 +18,12 @@ public class Lancha  extends Barco{
 
 	public int getPotencia() {
 		return potencia;
+	}
+
+	@Override
+	public String toString() {
+		return super.toString()+"La velocidad max de la lancha es: " 
+	+ velocidadmax + "y  su potencia es de : " + potencia + "]";
 	}
 	
 	
