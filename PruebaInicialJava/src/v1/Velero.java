@@ -9,6 +9,7 @@ public class Velero extends Barco{
 		this.alturavela=alturavela;
 		
 	}
+	
 	public int getAlturavela() {
 		return alturavela;
 	}

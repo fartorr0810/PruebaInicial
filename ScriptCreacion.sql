@@ -1,18 +1,19 @@
 --SENTENCIAS DDL
-CREATE TABLE Localidad(
-    codlocalidad    number(5) PRIMARY KEY,
+CREATE TABLE Localidad (
+    cod_localidad    number(5) PRIMARY KEY,
     nombre  varchar2(30)
-);
+    );
+
 CREATE TABLE EMPLEADO(
-    dniempleado varchar2(10),
+    dniempleado varchar2(10) primary key,
     nombre  varchar2(30),
     domicilio   varchar2(50)
 );
 CREATE TABLE PUB(
     cod_pub number(5) primary key,
     nombre  varchar2(30),
-    licenciafiscal  varchar2(30),
-    domicilio   varchar2(30),
+    licenciafiscal  varchar2(30) not null,
+    domicilio   varchar2(30) not null,
     FECHAAPERTURA   varchar2(30),
     cod_localidad   number(5) REFERENCES Localidad
 );
@@ -38,12 +39,12 @@ CREATE TABLE PUB_EMPLEADOS (
 ALTER TABLE existencias ADD CONSTRAINT ck_precio
 CHECK (precio > 0);
 
-ALTER TABLE pub_empleado ADD CONSTRAINT ck_funcion
+ALTER TABLE pub_empleados ADD CONSTRAINT ck_funcion
  CHECK (funcion IN ('CAMARERA', 'PORTERO', 'LIMPIEZA')) ;
 
-ALTER TABLE pub_empleado ADD sueldo number(5,2);
-ALTER TABLE pub_empleado MODIFY sueldo number(8,2);
-ALTER TABLE pub_empleado DROP COLUMN sueldo;
+ALTER TABLE pub_empleados ADD sueldo number(5,2);
+ALTER TABLE pub_empleados MODIFY sueldo number(8,2);
+ALTER TABLE pub_empleados DROP COLUMN sueldo;
 --
 
 --SENTENCIAS DML
@@ -52,7 +53,7 @@ INSERT INTO Localidad (codlocalidad,nombre) VALUES
 INSERT INTO Localidad (codlocalidad,nombre) VALUES
 (2,'Madrid');
 INSERT INTO Localidad (codlocalidad,nombre) VALUES
-(3,'BARCELONA');
+(3,'Barcelona');
 
 INSERT INTO EMPLEADO (dniempleado,nombre,domicilio )
 VALUES ('12345678-X','Pepe','C/San Pedro');
@@ -71,12 +72,12 @@ VALUES ('97564347-H','Pedro','C/San Damas');
 INSERT INTO EMPLEADO (dniempleado,nombre,domicilio )
 VALUES ('75863758-Q','Maria','C/San Bacalao');
 
-INSERT into pub (cod_pub,nombre,licenciafiscal,domicilio,FECHAAPERTURA,codlocalidad)
-VALUES (1,'Yuca','1231423232112X','C/Julio Verne',20000213000000,1);
-INSERT into pub (cod_pub,nombre,licenciafiscal,domicilio,FECHAAPERTURA,codlocalidad)
-VALUES (2,'Bambu','1651423232402D','Embarca',20010213000000,2);
-INSERT into pub (cod_pub,nombre,licenciafiscal,domicilio,FECHAAPERTURA,codlocalidad)
-VALUES (3,'ANSUFAM','1651465432402D','Little Spain',20010213000000,3);
+INSERT into pub (cod_pub,nombre,licenciafiscal,domicilio,FECHAAPERTURA,cod_localidad)
+VALUES (1,'Yuca','1231423232112X','C/Julio Verne','20000213',1);
+INSERT into pub (cod_pub,nombre,licenciafiscal,domicilio,FECHAAPERTURA,cod_localidad)
+VALUES (2,'Bambu','1651423232402D','Embarca','20010213',2);
+INSERT into pub (cod_pub,nombre,licenciafiscal,domicilio,FECHAAPERTURA,cod_localidad)
+VALUES (3,'ANSUFAM','1651465432402D','Little Spain','20010213',3);
 
 INSERT into existencias(cod_articulo,nombre,cantidad,precio,cod_pub)
 VALUES (1231,'Fanta',12,1.60,1);
@@ -101,12 +102,14 @@ VALUES (8761,'Nejar',87,8.80,3);
 INSERT into existencias(cod_articulo,nombre,cantidad,precio,cod_pub)
 VALUES (1560,'Mercader',96,12.60,3);
 
+--Anadir el domicilioooooooooooooo
+
 INSERT into Titular(dni_titular,nombre,domicilio,cod_pub)
-VALUES ('232123345-L','Dani El Rojo',1);
+VALUES ('23213345-L','Dani El Rojo','Casa Trourette',1);
 INSERT into Titular(dni_titular,nombre,domicilio,cod_pub)
-VALUES ('632164345-A','Coto Matamoros',2);
+VALUES ('63216445-A','Coto Matamoros','Vietnam',2);
 INSERT into Titular(dni_titular,nombre,domicilio,cod_pub)
-VALUES ('465433450-J','Pipi Cazaslargas',3);
+VALUES ('46543350-J','Pipi Cazaslargas','Florida',3);
 
 INSERT into PUB_EMPLEADOS(cod_pub,dniempleado,funcion)
 VALUES (1,'12345678-X','PORTERO');

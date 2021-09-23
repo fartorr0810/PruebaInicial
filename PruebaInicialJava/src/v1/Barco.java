@@ -1,8 +1,9 @@
 package v1;
 
+import java.util.Comparator;
 import java.util.Objects;
 
-public abstract class Barco {
+public abstract class Barco implements Comparable<Barco>{
 	private double altura;
 	private double ancho;
 	private int capacidad;
@@ -40,6 +41,16 @@ public abstract class Barco {
 	}
 
 	//Un barco sera igual si tienen el mismo modelo y codigo.
+	
+
+	@Override
+	public String toString() {
+		return "Barco con altura: " + altura + "de  ancho :" + ancho + ", capacidad de: " + capacidad + "con "
+				+ "codigo: " + codigo
+				+ "y su modelo:"  + modelo+"";
+		
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(codigo, modelo);
@@ -56,13 +67,9 @@ public abstract class Barco {
 		Barco other = (Barco) obj;
 		return codigo == other.codigo && Objects.equals(modelo, other.modelo);
 	}
-
 	@Override
-	public String toString() {
-		return "Barco con altura: " + altura + "de  ancho :" + ancho + ", capacidad de: " + capacidad + "con "
-				+ "codigo: " + codigo
-				+ "y su modelo:"  + modelo+"";
-		
+	public int compareTo(Barco b1) {
+		int result;
+		return result=this.modelo.compareTo(b1.getModelo());
 	}
-	
 }
