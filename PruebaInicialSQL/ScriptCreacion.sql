@@ -48,11 +48,11 @@ ALTER TABLE pub_empleados DROP COLUMN sueldo;
 --
 
 --SENTENCIAS DML
-INSERT INTO Localidad (codlocalidad,nombre) VALUES
+INSERT INTO Localidad (cod_localidad,nombre) VALUES
 (1,'Sevilla');
-INSERT INTO Localidad (codlocalidad,nombre) VALUES
+INSERT INTO Localidad (cod_localidad,nombre) VALUES
 (2,'Madrid');
-INSERT INTO Localidad (codlocalidad,nombre) VALUES
+INSERT INTO Localidad (cod_localidad,nombre) VALUES
 (3,'Barcelona');
 
 INSERT INTO EMPLEADO (dniempleado,nombre,domicilio )
@@ -102,8 +102,6 @@ VALUES (8761,'Nejar',87,8.80,3);
 INSERT into existencias(cod_articulo,nombre,cantidad,precio,cod_pub)
 VALUES (1560,'Mercader',96,12.60,3);
 
---Anadir el domicilioooooooooooooo
-
 INSERT into Titular(dni_titular,nombre,domicilio,cod_pub)
 VALUES ('23213345-L','Dani El Rojo','Casa Trourette',1);
 INSERT into Titular(dni_titular,nombre,domicilio,cod_pub)
@@ -128,4 +126,18 @@ VALUES (3,'97564347-H','PORTERO');
 INSERT into PUB_EMPLEADOS(cod_pub,dniempleado,funcion)
 VALUES (3,'75863758-Q','CAMARERA');
 --
---CONSULTAS
+--Modificar datos
+UPDATE existencias SET precio = 2000.00 WHERE precio = 199.60 ;
+DELETE FROM PUB_EMPLEADOS WHERE dniempleado='75863758-Q';
+
+
+--Consultas.
+
+SELECT COUNT(funcion)
+FROM pub_empleados
+WHERE pub_empleados='PORTERO';
+
+SELECT NOMBRE,dniempleado
+FROM EMPLEADO WHERE nombre LIKE 'P%';
+
+
