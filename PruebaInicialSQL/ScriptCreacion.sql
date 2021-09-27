@@ -78,6 +78,8 @@ INSERT into pub (cod_pub,nombre,licenciafiscal,domicilio,FECHAAPERTURA,cod_local
 VALUES (2,'Bambu','1651423232402D','Embarca','20010213',2);
 INSERT into pub (cod_pub,nombre,licenciafiscal,domicilio,FECHAAPERTURA,cod_localidad)
 VALUES (3,'ANSUFAM','1651465432402D','Little Spain','20010213',3);
+INSERT into pub (cod_pub,nombre,licenciafiscal,domicilio,FECHAAPERTURA,cod_localidad)
+VALUES (4,'FANTASMA','1651465122402D','Little Canada','20110213',3);
 
 INSERT into existencias(cod_articulo,nombre,cantidad,precio,cod_pub)
 VALUES (1231,'Fanta',12,1.60,1);
@@ -126,18 +128,60 @@ VALUES (3,'97564347-H','PORTERO');
 INSERT into PUB_EMPLEADOS(cod_pub,dniempleado,funcion)
 VALUES (3,'75863758-Q','CAMARERA');
 --
---Modificar datos
+--Modificar datos (DDL)
 UPDATE existencias SET precio = 2000.00 WHERE precio = 199.60 ;
 DELETE FROM PUB_EMPLEADOS WHERE dniempleado='75863758-Q';
 
 
 --Consultas.
+--Numero de empleados que son portero
+select count(funcion)
+from pub_empleados
+where funcion='PORTERO';
+--Nombre y dni de los empleados que su nombre empiecen por p
+select nombre,dniempleado
+from empleado where nombre like 'p%';
+--Dni, pub donde trabaja y el domicilio del empleado.
+SELECT pu.dniempleado, pu.cod_pub,empleado.domicilio
+FROM PUB_EMPLEADOS pu, empleado
+WHERE pu.cod_pub=1 and empleado.dniempleado=pu.dniempleado
+--Local vacio que no tiene emleados ni titular
+select * from pub
+where cod_pub not in(select cod_pub from pub_empleados)
+and cod_pub not in(select cod_pub from titular);
 
-SELECT COUNT(funcion)
-FROM pub_empleados
-WHERE pub_empleados='PORTERO';
+--Codigo y nombre de articulos con un precio superior a la media 
+SELECT cod_articulo,nombre,precio
+FROM existencias
+WHERE existencias.precio>(select AVG(existencias.precio) from existencias);
+--Nombre y precio de productos ordenados de menor a mayor precio
+select existencias.nombre, existencias.precio
+from existencias
+order by existencias.precio asc;
+--Mostrar los dnis  distintos que no terminen en X
+SELECT DISTINCT (EMPLEADO.DNIEMPLEADO),EMPLEADO.NOMBRE
+FROM EMPLEADO
+WHERE EMPLEADO.DNIEMPLEADO IN(SELECT EMPLEADO.DNIEMPLEADO
+FROM EMPLEADO 
+WHERE EMPLEADO.DNIEMPLEADO<>'%X');
 
-SELECT NOMBRE,dniempleado
-FROM EMPLEADO WHERE nombre LIKE 'P%';
+SELECT count(xs.nombre)
+FROM EXISTENCIAS xs
+group by xs.cod_articulo
+having sum(xs.cantidad)>2;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
